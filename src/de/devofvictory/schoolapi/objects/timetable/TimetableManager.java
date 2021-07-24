@@ -26,15 +26,19 @@ public class TimetableManager {
 	private String username;
 	private String password;
 	private WebDriver driver;
+	private boolean debug;
 	
 	public TimetableManager(String host, String username, String password) {
+		this.debug = false;
 		initDriver("chrome", "chromedriver");
 		this.host = host;
 		this.username = username;
 		this.password = password;
+		
 	}
 	
-	public TimetableManager(String browserType, String path, String host, String username, String password) {
+	public TimetableManager(String browserType, String path, boolean debug, String host, String username, String password) {
+		this.debug = debug;
 		initDriver(browserType, path);
 		this.host = host;
 		this.username = username;
@@ -45,9 +49,11 @@ public class TimetableManager {
 		
 		if (browserType.equalsIgnoreCase("chrome")) {
 			ChromeOptions chromeOptions = new ChromeOptions();
-		    chromeOptions.setHeadless(true);
-		    chromeOptions.addArguments("--no-sandbox");
-		    chromeOptions.addArguments("--disable-gpu");
+			if (!debug) {
+			    chromeOptions.setHeadless(true);
+			    chromeOptions.addArguments("--no-sandbox");
+			    chromeOptions.addArguments("--disable-gpu");
+			}
 		    chromeOptions.addArguments("user-data-dir="+System.getProperty("user.dir")+"\\chrome_data_dir", "window-size=900,900");
 		    
 			System.setProperty("webdriver.chrome.driver", "chromedriver");
@@ -88,6 +94,7 @@ public class TimetableManager {
 			System.out.println("Requesting timetable from " + host + "...");
 			driver.get("http://" + username + ":" + password
 					+ "@"+host+"/c/" + week + "/c000" + classId + ".htm");
+
 			System.out.println("Got response from " + host);
 			WebElement ele = driver.findElement(By.xpath("/html/body/center/table[1]/tbody"));
 			
@@ -112,6 +119,7 @@ public class TimetableManager {
 		} catch (Exception ex) {
 			if (ex instanceof NoSuchElementException) {
 				System.out.println("[ERROR] Couldn't find any timetable on given host. Are you using 'Untis Vertretungsplan 2021'?");
+				ex.printStackTrace();
 			}else {
 				ex.printStackTrace();				
 			}
