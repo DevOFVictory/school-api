@@ -6,32 +6,32 @@ import java.util.List;
 
 public class IservMail {
 
-	private String senderMailAddress;
-	private List<String> receiverMailAddresses;
+	private IservUser senderUser;
+	private List<IservUser> receiverUsers;
 	private Date timeSent;
 	private String subject;
 	private String content;
 	
 	public IservMail(String subject) {
 		this.subject = subject;
-		this.receiverMailAddresses = new ArrayList<String>();
+		this.receiverUsers = new ArrayList<IservUser>();
 	}
 
-	public String getSenderMailAddress() {
-		return senderMailAddress;
+	public IservUser getSenderMailAddress() {
+		return senderUser;
 	}
 
 
-	public List<String> getReceiverMailAddresses() {
-		return receiverMailAddresses;
+	public List<IservUser> getReceiverMailAddresses() {
+		return receiverUsers;
 	}
 
-	public void setReceiverMailAddresses(List<String> receiverMailAddresses) {
-		this.receiverMailAddresses = receiverMailAddresses;
+	public void setReceiverMailAddresses(List<IservUser> receiverMailAddresses) {
+		this.receiverUsers = receiverMailAddresses;
 	}
 	
-	public void addReceiverAddress(String address) {
-		receiverMailAddresses.add(address);
+	public void addReceiverAddress(IservUser address) {
+		receiverUsers.add(address);
 	}
 
 	public Date getTimeSent() {
@@ -52,6 +52,14 @@ public class IservMail {
 
 	public void setContent(String content) {
 		this.content = content;
+	}
+	
+	public void setTimeSent(Date timeSent) {
+		this.timeSent = timeSent;
+	}
+	
+	public void setSenderUser(IservUser senderUser) {
+		this.senderUser = senderUser;
 	}
 
 }

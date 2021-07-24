@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Properties;
-import java.util.stream.Collectors;
 
 import javax.mail.Address;
 import javax.mail.Authenticator;
@@ -24,6 +23,7 @@ import org.apache.commons.lang3.text.WordUtils;
 
 import com.sun.mail.imap.IMAPStore;
 
+import de.devofvictory.schoolapi.main.SchoolAPI;
 import de.devofvictory.schoolapi.utils.MailUtil;
 
 @SuppressWarnings("deprecation")
@@ -91,7 +91,7 @@ public class MailManager {
 		try {
 
 			if (imapStore == null) {
-				System.out.println("Not connected");
+				SchoolAPI.logMessage(3, "Mail client not connected");
 			}
 
 			Folder mailFolder;
@@ -99,7 +99,7 @@ public class MailManager {
 
 			mailFolder.open(Folder.READ_WRITE);
 
-			Message[] messages = mailFolder.getMessages(mailFolder.getMessageCount() - amount,
+			Message[] messages = mailFolder.getMessages(mailFolder.getMessageCount() - amount + 1,
 					mailFolder.getMessageCount());
 
 			List<IservMail> mails = new ArrayList<IservMail>();
@@ -114,7 +114,30 @@ public class MailManager {
 					content = message.getContent().toString().trim();
 				}
 				mail.setContent(content);
-				mail.setReceiverMailAddresses(Arrays.asList(message.getAllRecipients()).stream().map(Address::toString).collect(Collectors.toList()));
+				mail.setTimeSent(message.getSentDate());
+				
+				IservUser sender = new IservUser();
+				String[] splittedSender = message.getFrom()[0].toString().split(" <");
+				sender.setMailAddress(splittedSender[1].replace(">", ""));
+				sender.setFullName(splittedSender[0]);
+				
+				mail.setSenderUser(sender);
+				
+				List<IservUser> receivers = new ArrayList<IservUser>();
+				
+				for (Address address : Arrays.asList(message.getAllRecipients())) {
+					
+					IservUser receiver = new IservUser();
+					
+					String[] splittedReceiver = address.toString().split(" <");
+					receiver.setMailAddress(splittedReceiver[1].replace(">", ""));
+					receiver.setFullName(splittedReceiver[0]);
+					
+					
+					receivers.add(receiver);
+				}
+				
+				mail.setReceiverMailAddresses(receivers);
 				mails.add(mail);
 				
 				
@@ -129,7 +152,7 @@ public class MailManager {
 
 	public void send(IservMail mail) throws MessagingException, IllegalStateException, UnsupportedEncodingException {
 		if (mailSession == null) {
-			throw new IllegalStateException("Not logged in.");
+			SchoolAPI.logMessage(3, "Mail client not connected");
 		}
 
 		MimeMessage msg = new MimeMessage(mailSession);
@@ -148,7 +171,7 @@ public class MailManager {
 
 		InternetAddress[] recipientAddress = new InternetAddress[mail.getReceiverMailAddresses().size()];
 		for (int i = 0; i < mail.getReceiverMailAddresses().size(); i++) {
-			recipientAddress[i] = new InternetAddress(mail.getReceiverMailAddresses().get(i));
+			recipientAddress[i] = new InternetAddress(mail.getReceiverMailAddresses().get(i).getMailAddress());
 		}
 
 		msg.setRecipients(Message.RecipientType.TO, recipientAddress);
