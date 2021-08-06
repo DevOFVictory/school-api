@@ -37,5 +37,9 @@ public class SessionManager {
 		// TODO Auto-generated catch block
 
 	}
+	
+	public static HashMap<String, IservSession> getIservSessions() {
+		return iservSessions;
+	}
 
 }

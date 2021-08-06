@@ -20,12 +20,16 @@ public class SchoolAPI {
 			HttpServer webserver = HttpServer.create(new InetSocketAddress(Integer.parseUnsignedInt(args[0])), 0);
 			webserver.createContext("/", new NotFoundHandler());
 			webserver.createContext("/schoolapi", new NotFoundHandler());
+			webserver.createContext("/schoolapi/v1", new NotFoundHandler());
+			webserver.createContext("/schoolapi/v1/iserv", new NotFoundHandler());
 			webserver.createContext("/schoolapi/v1/iserv/authentificate", new AuthenticationHandler());
 			webserver.createContext("/schoolapi/v1/iserv/exercises", new ExercisesHandler());
 			webserver.start();
 
 			logMessage(2, "Web API is now listening on " + webserver.getAddress().getAddress() + ":"
 					+ webserver.getAddress().getPort());
+			
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
