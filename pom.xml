@@ -18,69 +18,75 @@
 			</plugin>
 		</plugins>
 	</build>
+	<!-- Parsing HTML Code -->
 	<dependencies>
-		<!-- https://mvnrepository.com/artifact/org.jsoup/jsoup -->
 		<dependency>
 			<groupId>org.jsoup</groupId>
 			<artifactId>jsoup</artifactId>
-			<version>1.13.1</version>
+			<version>1.14.2</version>
 		</dependency>
+		<!-- Handling In- and Outgoing mails -->
 		<dependency>
 			<groupId>javax.mail</groupId>
 			<artifactId>javax.mail-api</artifactId>
 			<version>1.6.2</version>
 		</dependency>
-		<!-- https://mvnrepository.com/artifact/javax/javaee-api -->
+		<!-- API for Java Mail -->
 		<dependency>
 			<groupId>javax</groupId>
 			<artifactId>javaee-api</artifactId>
 			<version>8.0.1</version>
 			<scope>provided</scope>
 		</dependency>
+		<!-- Requesting the timetable from untis -->
 		<dependency>
 			<groupId>org.seleniumhq.selenium</groupId>
 			<artifactId>selenium-java</artifactId>
 			<version>3.141.59</version>
 		</dependency>
+		<!-- A useful libary -->
 		<dependency>
 			<groupId>commons-io</groupId>
 			<artifactId>commons-io</artifactId>
 			<version>2.7</version>
 		</dependency>
+		<!-- Libary for parsing text -->
 		<dependency>
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-lang3</artifactId>
 			<version>3.12.0</version>
 		</dependency>
-		<!-- https://mvnrepository.com/artifact/javax.servlet/javax.servlet-api -->
-		<!-- https://mvnrepository.com/artifact/com.sun.net.httpserver/http -->
+		<!-- Creating and maneging the webservice -->
 		<dependency>
 			<groupId>com.sun.net.httpserver</groupId>
 			<artifactId>http</artifactId>
 			<version>20070405</version>
 		</dependency>
+		<!-- Parsing JSON files -->
 		<dependency>
 			<groupId>com.googlecode.json-simple</groupId>
 			<artifactId>json-simple</artifactId>
 			<version>1.1.1</version>
 		</dependency>
+		<!-- Parsing JSON files -->
 		<dependency>
 			<groupId>com.google.code.gson</groupId>
 			<artifactId>gson</artifactId>
 			<version>2.8.7</version>
 		</dependency>
-		<!-- https://mvnrepository.com/artifact/org.mnode.ical4j/ical4j -->
+		<!-- Parsing .ics files -->
 		<dependency>
 			<groupId>org.mnode.ical4j</groupId>
 			<artifactId>ical4j</artifactId>
 			<version>4.0.0-alpha10</version>
 		</dependency>
-		<!-- https://mvnrepository.com/artifact/jcache/jcache -->
+		<!-- Cachening for icla4j -->
 		<dependency>
 			<groupId>jcache</groupId>
 			<artifactId>jcache</artifactId>
 			<version>1.0-dev-2</version>
 		</dependency>
+		<!-- Cachening for icla4j -->
 		<dependency>
 			<groupId>javax.cache</groupId>
 			<artifactId>cache-api</artifactId>
@@ -88,12 +94,6 @@
 			<scope>compile</scope>
 			<optional>true</optional>
 		</dependency>
-
-
-
-
-
-
 	</dependencies>
 
 </project>
