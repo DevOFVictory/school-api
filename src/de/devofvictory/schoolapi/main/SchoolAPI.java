@@ -16,6 +16,7 @@ public class SchoolAPI {
 
 	public static void main(String[] args) {
 		
+		
 		try {
 			HttpServer webserver = HttpServer.create(new InetSocketAddress(Integer.parseUnsignedInt(args[0])), 0);
 			webserver.createContext("/", new NotFoundHandler());
