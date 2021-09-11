@@ -9,7 +9,6 @@ import net.fortuna.ical4j.data.CalendarBuilder;
 import net.fortuna.ical4j.model.Calendar;
 import net.fortuna.ical4j.model.ComponentList;
 import net.fortuna.ical4j.model.component.CalendarComponent;
-import net.fortuna.ical4j.util.MapTimeZoneCache;
 
 public class CalenderManager {
 	
@@ -18,7 +17,7 @@ public class CalenderManager {
 		
 		try {
 			
-			System.setProperty("net.fortuna.ical4j.timezone.cache.impl", MapTimeZoneCache.class.getName());
+			
 			
 			InputStream fis = new URL(Credentials.calenderUrl).openStream();
 			

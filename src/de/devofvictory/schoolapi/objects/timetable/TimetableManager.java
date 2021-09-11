@@ -28,37 +28,45 @@ public class TimetableManager {
 	private WebDriver driver;
 	private boolean debug;
 	
+	public TimetableManager() {
+		initDriver("chrome", "chromedriver");
+	}
+	
 	public TimetableManager(String host, String username, String password) {
 		this.debug = false;
-		initDriver("chrome", "chromedriver");
 		this.host = host;
 		this.username = username;
 		this.password = password;
-		
 	}
 	
 	public TimetableManager(String browserType, String path, boolean debug, String host, String username, String password) {
 		this.debug = debug;
-		initDriver(browserType, path);
 		this.host = host;
 		this.username = username;
 		this.password = password;
 	}
 	
-	private void initDriver(String browserType, String path) {
-		
+	
+	public void closeDriver() {
+		driver.close();
+	}
+	
+	public void initDriver(String browserType, String path) {
+
 		if (browserType.equalsIgnoreCase("chrome")) {
 			ChromeOptions chromeOptions = new ChromeOptions();
+
 			if (!debug) {
 			    chromeOptions.setHeadless(true);
 			    chromeOptions.addArguments("--no-sandbox");
 			    chromeOptions.addArguments("--disable-gpu");
 			}
+
 		    chromeOptions.addArguments("user-data-dir="+System.getProperty("user.dir")+"\\chrome_data_dir", "window-size=900,900");
-		    
 			System.setProperty("webdriver.chrome.driver", "chromedriver");
-	
+
 			driver = new ChromeDriver(chromeOptions);
+
 		}else if (browserType.equalsIgnoreCase("firefox")) {
 			FirefoxOptions firefoxOptions = new FirefoxOptions();
 			firefoxOptions.setHeadless(true);
@@ -87,15 +95,15 @@ public class TimetableManager {
 		}
 	}
 
-	public File requestScreenshot(int week, File targetDirectory) {
+	public File requestScreenshot(int week, int classId, File targetDirectory) {
+		return requestScreenshot(week, classId, targetDirectory, host, username, password);
+	}
+	
+	public File requestScreenshot(int week, int classId, File targetDirectory, String apiHost, String apiUser, String apiPassword) {
 		try {
-			
-			int classId = 22;
-			System.out.println("Requesting timetable from " + host + "...");
-			driver.get("http://" + username + ":" + password
-					+ "@"+host+"/c/" + week + "/c000" + classId + ".htm");
+			driver.get("http://" + apiUser + ":" + apiPassword
+					+ "@"+apiHost+"/c/" + week + "/c000" + classId + ".htm");
 
-			System.out.println("Got response from " + host);
 			WebElement ele = driver.findElement(By.xpath("/html/body/center/table[1]/tbody"));
 			
 
@@ -113,7 +121,6 @@ public class TimetableManager {
 			File screenshotLocation = new File(targetDirectory.getPath() + System.currentTimeMillis() + ".png");
 
 			FileUtils.copyFile(screenshot, screenshotLocation);
-			System.out.println("Timetable saved as " + screenshotLocation);
 			return screenshotLocation;
 
 		} catch (Exception ex) {
@@ -125,7 +132,6 @@ public class TimetableManager {
 			}
 			return null;
 		}
-
 	}
 	
 }

@@ -1,6 +1,7 @@
 package de.devofvictory.schoolapi.webapi;
 
 import java.io.IOException;
+import java.net.InetSocketAddress;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -8,10 +9,18 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.sun.net.httpserver.HttpExchange;
+import com.sun.net.httpserver.HttpServer;
 
 import de.devofvictory.schoolapi.main.SchoolAPI;
+import de.devofvictory.schoolapi.objects.timetable.TimetableManager;
+import de.devofvictory.schoolapi.webapi.handlers.AuthenticationHandler;
+import de.devofvictory.schoolapi.webapi.handlers.ExercisesHandler;
+import de.devofvictory.schoolapi.webapi.handlers.NotFoundHandler;
+import de.devofvictory.schoolapi.webapi.handlers.TimetableHandler;
 
 public class WebAPIUtils {
+	
+	public static TimetableManager apiTimetableManager = new TimetableManager();
 	
 	public static void returnError(HttpExchange exchange, String message, int code) {
 		
@@ -27,6 +36,31 @@ public class WebAPIUtils {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public static void startWebserver(int port) {
+		
+		
+		try {
+			HttpServer webserver = HttpServer.create(new InetSocketAddress(port), 0);
+			webserver.createContext("/", new NotFoundHandler());
+			webserver.createContext("/schoolapi", new NotFoundHandler());
+			webserver.createContext("/schoolapi/v1", new NotFoundHandler());
+			webserver.createContext("/schoolapi/v1/iserv", new NotFoundHandler());
+			webserver.createContext("/schoolapi/v1/iserv/authentificate", new AuthenticationHandler());
+			webserver.createContext("/schoolapi/v1/iserv/exercises", new ExercisesHandler());
+			
+			webserver.createContext("/schoolapi/v1/untis/timetable", new TimetableHandler());
+			webserver.start();
+
+			SchoolAPI.logMessage(2, "Web API is now listening on " + webserver.getAddress().getAddress() + ":"
+					+ webserver.getAddress().getPort());
+			
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
 	}
 	
 	public static void returnResponse(HttpExchange exchange, String jsonString) {

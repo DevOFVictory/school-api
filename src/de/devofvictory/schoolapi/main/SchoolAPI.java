@@ -1,40 +1,31 @@
 package de.devofvictory.schoolapi.main;
 
-import java.net.InetSocketAddress;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import com.sun.net.httpserver.HttpServer;
-
 import de.devofvictory.schoolapi.utils.ConsoleColorCodes;
-import de.devofvictory.schoolapi.webapi.handlers.AuthenticationHandler;
-import de.devofvictory.schoolapi.webapi.handlers.ExercisesHandler;
-import de.devofvictory.schoolapi.webapi.handlers.NotFoundHandler;
+import de.devofvictory.schoolapi.webapi.WebAPIUtils;
+import net.fortuna.ical4j.util.MapTimeZoneCache;
 
 public class SchoolAPI {
 
 
 	public static void main(String[] args) {
 		
+		System.setProperty("net.fortuna.ical4j.timezone.cache.impl", MapTimeZoneCache.class.getName());
 		
-		try {
-			HttpServer webserver = HttpServer.create(new InetSocketAddress(Integer.parseUnsignedInt(args[0])), 0);
-			webserver.createContext("/", new NotFoundHandler());
-			webserver.createContext("/schoolapi", new NotFoundHandler());
-			webserver.createContext("/schoolapi/v1", new NotFoundHandler());
-			webserver.createContext("/schoolapi/v1/iserv", new NotFoundHandler());
-			webserver.createContext("/schoolapi/v1/iserv/authentificate", new AuthenticationHandler());
-			webserver.createContext("/schoolapi/v1/iserv/exercises", new ExercisesHandler());
-			webserver.start();
+		WebAPIUtils.startWebserver(Integer.parseUnsignedInt(args[0]));
 
-			logMessage(2, "Web API is now listening on " + webserver.getAddress().getAddress() + ":"
-					+ webserver.getAddress().getPort());
-			
-
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
+		
+		Runtime.getRuntime().addShutdownHook(new Thread()
+		{
+		    @Override
+		    public void run()
+		    {
+		    	logMessage("Bye");
+			    WebAPIUtils.apiTimetableManager.closeDriver();
+		    }
+		});
 	}
 
 
