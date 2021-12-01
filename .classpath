@@ -16,5 +16,6 @@
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="lib" path="C:/Users/delfi/Downloads/matrix-client-server-api-r0.3.0.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

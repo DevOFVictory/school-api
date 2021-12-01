@@ -44,6 +44,7 @@ public class MailManager {
 		this.password = password;
 		this.imapPort = 993;
 		this.smtpPort = 465;
+	
 	}
 
 	public MailManager(String host, int imapPort, int smtpPort, String useranme, String password) {

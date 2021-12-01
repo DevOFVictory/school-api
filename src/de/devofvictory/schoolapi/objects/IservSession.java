@@ -1,7 +1,9 @@
 package de.devofvictory.schoolapi.objects;
 
+import de.devofvictory.schoolapi.objects.calender.CalendarManager;
 import de.devofvictory.schoolapi.objects.exercises.ExerciseManager;
 import de.devofvictory.schoolapi.objects.mail.MailManager;
+import de.devofvictory.schoolapi.objects.publicprofile.PublicProfileManager;
 import de.devofvictory.schoolapi.utils.IservUtil;
 
 public class IservSession {
@@ -15,6 +17,8 @@ public class IservSession {
 	
 	private ExerciseManager exerciseManager;
 	private MailManager mailManager;
+	private CalendarManager calendarManager;
+	private PublicProfileManager publicProfileManager;
 
 	public IservSession(String iservAddress, String username, String password) {
 		this.iservAddress = iservAddress;
@@ -64,6 +68,25 @@ public class IservSession {
 			return null;
 		}
 	}
+	
+	
+	public CalendarManager getCalendarManager() {
+		if (isConnected) {
+			return calendarManager; 
+		}else {
+			System.out.println("Not connected");
+			return null;
+		}
+	}
+	
+	public PublicProfileManager getPublicProfileManager() {
+		if (isConnected) {
+			return publicProfileManager; 
+		}else {
+			System.out.println("Not connected");
+			return null;
+		}
+	}
 
 	public String connect() {
 		
@@ -79,6 +102,10 @@ public class IservSession {
 				this.exerciseManager = new ExerciseManager(iservAddress, cookies);
 				this.mailManager = new MailManager(iservAddress, username, password);
 				this.mailManager.login();
+				
+				this.calendarManager = new CalendarManager();
+				
+				this.publicProfileManager = new PublicProfileManager(iservAddress, cookies);
 
 				return "SUCCESS";
 			} else if (cookies.length == 1) {

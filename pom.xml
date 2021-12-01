@@ -27,8 +27,8 @@
 		</dependency>
 		<!-- Handling In- and Outgoing mails -->
 		<dependency>
-			<groupId>javax.mail</groupId>
-			<artifactId>javax.mail-api</artifactId>
+			<groupId>com.sun.mail</groupId>
+			<artifactId>javax.mail</artifactId>
 			<version>1.6.2</version>
 		</dependency>
 		<!-- API for Java Mail -->
@@ -94,6 +94,10 @@
 			<scope>compile</scope>
 			<optional>true</optional>
 		</dependency>
+
+
+
+
 	</dependencies>
 
 </project>

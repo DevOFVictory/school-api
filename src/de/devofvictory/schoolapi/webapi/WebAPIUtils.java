@@ -14,6 +14,7 @@ import com.sun.net.httpserver.HttpServer;
 import de.devofvictory.schoolapi.main.SchoolAPI;
 import de.devofvictory.schoolapi.objects.timetable.TimetableManager;
 import de.devofvictory.schoolapi.webapi.handlers.AuthenticationHandler;
+import de.devofvictory.schoolapi.webapi.handlers.CalendarHandler;
 import de.devofvictory.schoolapi.webapi.handlers.ExercisesHandler;
 import de.devofvictory.schoolapi.webapi.handlers.NotFoundHandler;
 import de.devofvictory.schoolapi.webapi.handlers.TimetableHandler;
@@ -47,8 +48,9 @@ public class WebAPIUtils {
 			webserver.createContext("/schoolapi", new NotFoundHandler());
 			webserver.createContext("/schoolapi/v1", new NotFoundHandler());
 			webserver.createContext("/schoolapi/v1/iserv", new NotFoundHandler());
-			webserver.createContext("/schoolapi/v1/iserv/authentificate", new AuthenticationHandler());
+			webserver.createContext("/schoolapi/v1/iserv/authenticate", new AuthenticationHandler());
 			webserver.createContext("/schoolapi/v1/iserv/exercises", new ExercisesHandler());
+			webserver.createContext("/schoolapi/v1/iserv/calendar", new CalendarHandler());
 			
 			webserver.createContext("/schoolapi/v1/untis/timetable", new TimetableHandler());
 			webserver.start();

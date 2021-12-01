@@ -26,7 +26,7 @@ public class AuthenticationHandler implements HttpHandler{
 		respHeaders.add("Content-Type", "application/json; charset=utf-8");
 		
 		if (exchange.getRequestMethod().equals("POST")) {
-			SchoolAPI.logMessage(0, "Authentification requested by " + exchange.getRemoteAddress().getAddress());
+			SchoolAPI.logMessage(0, "Authentication requested by " + exchange.getRemoteAddress().getAddress());
 			
 			if (reqHeaders.containsKey("host") && reqHeaders.containsKey("username") && reqHeaders.containsKey("password")) {
 				
