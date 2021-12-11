@@ -12,6 +12,7 @@
  - **Session** system
  - Runnable as **web API** to use it in **JSON** format in **any language**
  - Request **timetable as image** from "Units Vertretungsplan"
+ - Request your peronal public profile
 
 #### How to setup:
 ##### As java dependency / libary:
