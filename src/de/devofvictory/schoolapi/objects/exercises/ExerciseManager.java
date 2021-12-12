@@ -27,7 +27,7 @@ public class ExerciseManager {
 		this.sessionCookies = cookies;
 	}
 	
-	public IservResponse requestExercises(int amount) {
+	public IservResponse requestExercises(final int amount) {
 
 		ExecutorService executor = Executors.newCachedThreadPool();
 
@@ -39,7 +39,7 @@ public class ExerciseManager {
 
 				try {
 
-					Connection iservConnection = Jsoup.connect("https://" + iservAddress + "/iserv/exercise?filter%5Bstatus%5D=all");
+					Connection iservConnection = Jsoup.connect("https://" + iservAddress + "/iserv/exercise?filter%5Bstatus%5D=current");
 					iservConnection.timeout(5000);
 					iservConnection.cookie("REMEMBERME", sessionCookies[0].split("=")[1]);
 					iservConnection.cookie("IServSession", sessionCookies[1].split("=")[1]);
@@ -52,7 +52,13 @@ public class ExerciseManager {
 
 					List<Exercise> exercises = new ArrayList<Exercise>();
 
-					for (Element element : row.subList(row.size()-amount, row.size())) {
+					int a = 0;
+					if (amount > row.size()) {
+						a = row.size();
+					}else {
+						a = amount;
+					}
+					for (Element element : row.subList(row.size()-a, row.size())) {
 
 						Exercise exercise = new Exercise();
 

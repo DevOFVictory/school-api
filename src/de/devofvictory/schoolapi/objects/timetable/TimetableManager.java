@@ -65,6 +65,7 @@ public class TimetableManager {
 		    chromeOptions.addArguments("user-data-dir="+System.getProperty("user.dir")+"\\chrome_data_dir", "window-size=900,900");
 			System.setProperty("webdriver.chrome.driver", "chromedriver");
 
+
 			driver = new ChromeDriver(chromeOptions);
 
 		}else if (browserType.equalsIgnoreCase("firefox")) {
