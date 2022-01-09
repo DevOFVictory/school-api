@@ -103,7 +103,7 @@ public class TimetableManager {
 	public File requestScreenshot(int week, int classId, File targetDirectory, String apiHost, String apiUser, String apiPassword) {
 		try {
 			driver.get("http://" + apiUser + ":" + apiPassword
-					+ "@"+apiHost+"/c/" + week + "/c000" + classId + ".htm");
+					+ "@"+apiHost+"/c/" + String.format("%02d" , week) + "/c000" + classId + ".htm");
 
 			WebElement ele = driver.findElement(By.xpath("/html/body/center/table[1]/tbody"));
 			
