@@ -4,6 +4,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import de.devofvictory.schoolapi.objects.IservSession;
+import de.devofvictory.schoolapi.objects.exercises.Exercise;
 import de.devofvictory.schoolapi.utils.ConsoleColorCodes;
 import de.devofvictory.schoolapi.webapi.WebAPIUtils;
 import net.fortuna.ical4j.util.MapTimeZoneCache;
@@ -16,16 +17,12 @@ public class SchoolAPI {
 		System.setProperty("net.fortuna.ical4j.timezone.cache.impl", MapTimeZoneCache.class.getName());
 		
 		WebAPIUtils.startWebserver(Integer.parseUnsignedInt(args[0]));
-	
-		Runtime.getRuntime().addShutdownHook(new Thread()
-		{
-		    @Override
-		    public void run()
-		    {
-		    	logMessage("Bye");
-			    WebAPIUtils.apiTimetableManager.closeDriver();
-		    }
-		});
+
+		Runtime.getRuntime().addShutdownHook(new Thread(() -> {
+			logMessage("Bye");
+			WebAPIUtils.apiTimetableManager.closeDriver();
+		}));
+
 	}
 
 

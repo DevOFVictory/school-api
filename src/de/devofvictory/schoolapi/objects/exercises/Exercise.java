@@ -34,7 +34,19 @@ public class Exercise {
 		this.fullText = fullText;
 	}
 	public String getDeadlineTime() {
-		return deadlineTime;
+		return getDeadlineTime("dd.MM.yyyy HH:mm");
+	}
+
+	public String getDeadlineTime(String pattern) {
+		SimpleDateFormat format = new SimpleDateFormat("yyyyMMddhhmmss");
+
+		try {
+			Date date = format.parse(deadlineTime);
+			return new SimpleDateFormat(pattern).format(date);
+		} catch (ParseException e) {
+			e.printStackTrace();
+			return null;
+		}
 	}
 	public void setDeadlineTime(String deadlineTime) {
 		this.deadlineTime = deadlineTime;

@@ -88,13 +88,13 @@
 			<artifactId>ical4j</artifactId>
 			<version>4.0.0-alpha10</version>
 		</dependency>
-		<!-- Cachening for icla4j -->
+		<!-- Caching for icla4j -->
 		<dependency>
 			<groupId>jcache</groupId>
 			<artifactId>jcache</artifactId>
 			<version>1.0-dev-2</version>
 		</dependency>
-		<!-- Cachening for icla4j -->
+		<!-- Caching for icla4j -->
 		<dependency>
 			<groupId>javax.cache</groupId>
 			<artifactId>cache-api</artifactId>
@@ -102,8 +102,19 @@
 			<scope>compile</scope>
 			<optional>true</optional>
 		</dependency>
-
-
+		<!-- Unit Testing -->
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter</artifactId>
+            <version>RELEASE</version>
+            <scope>test</scope>
+        </dependency>
+		<dependency>
+			<groupId>org.junit.jupiter</groupId>
+			<artifactId>junit-jupiter</artifactId>
+			<version>RELEASE</version>
+			<scope>test</scope>
+		</dependency>
 
 
 	</dependencies>
