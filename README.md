@@ -1,6 +1,10 @@
 # School API
 ## an open source API for [IServ](https://iserv.de) and [Units](https://www.untis.at) written in Java
 
+---
+# ⚠️ Outdated: This API is not fully compatible with the newest version of IServ anymore
+---
+
 ### This project can either be used as Java libary for accessing units and iserv data, or can be executed as HTTP web API and access data through json.
 
 #### Features:
